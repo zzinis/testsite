@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Visual() {
+function Vids() {
     return (
         <div>
-            visaul
+            vids
         </div>
     )
 }
 
-export default Visual
+export default Vids
