@@ -21,6 +21,9 @@ import Gallery from './components/sub/Gallery';
 import Member from './components/sub/Member';
 import Youtube from './components/sub/Youtube';
 
+import './scss/style.scss';
+
+
 
 function App() {
   return (
