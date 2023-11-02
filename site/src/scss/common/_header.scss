@@ -1,15 +1,16 @@
 header {
 	width: 100%;
-	background: #222;
+	background: #fff;
 	padding: 20px 10vw;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	border-bottom: 1px solid #ddd;
 
 	h1 {
 		a {
 			font: bold 24px/1 "arial";
-			color: #fff;
+			color: #555;
 		}
 	}
 
@@ -23,7 +24,8 @@ header {
 				color: #ddd;
 
 				&.on {
-					color: aqua;
+					color: #000;
+					font-weight: bold;
 				}
 			}
 		}
