@@ -1,11 +1,8 @@
 import React from 'react'
+import Layout from '../common/Layout';
 
 function Gallery() {
-    return (
-        <div>
-            gallery
-        </div>
-    )
+    return <Layout name={'Gallery'}>Gallery</Layout>;
 }
 
 export default Gallery

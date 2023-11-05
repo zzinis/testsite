@@ -1,11 +1,8 @@
 import React from 'react'
+import Layout from '../common/Layout';
 
 function Youtube() {
-    return (
-        <div>
-            youtube
-        </div>
-    )
+    return <Layout name={'Youtube'}>Youtube</Layout>;
 }
 
 export default Youtube
