@@ -20,10 +20,14 @@ function Youtube() {
             {Vids.map((vid, idx) => {
                 return (
                     <article key={idx}>
-                        <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
                         <h2>{vid.snippet.title.length > 50 ? vid.snippet.title.substr(0, 50) + '...' : vid.snippet.title}</h2>
-                        <p>{vid.snippet.description.length > 200 ? vid.snippet.description.substr(0, 200) + '...' : vid.snippet.description}</p>
-                        <span>{vid.snippet.publishedAt.split('T')[0].split('-').join('.')}</span>
+                        <div className='txt'>
+                            <p>{vid.snippet.description.length > 200 ? vid.snippet.description.substr(0, 200) + '...' : vid.snippet.description}</p>
+                            <span>{vid.snippet.publishedAt.split('T')[0].split('-').join('.')}</span>
+                        </div>
+                        <div className='pic'>
+                            <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
+                        </div>
                     </article>
                 );
             })}
