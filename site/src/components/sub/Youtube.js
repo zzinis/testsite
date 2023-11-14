@@ -1,10 +1,11 @@
 import React from 'react'
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Layout from '../common/Layout';
 import Modal from '../common/Modal';
 
 function Youtube() {
+    const modal = useRef(null);
     const [Vids, setVids] = useState([]);
     useEffect(() => {
         const key = 'key값';
@@ -27,14 +28,14 @@ function Youtube() {
                                 <p>{vid.snippet.description.length > 200 ? vid.snippet.description.substr(0, 200) + '...' : vid.snippet.description}</p>
                                 <span>{vid.snippet.publishedAt.split('T')[0].split('-').join('.')}</span>
                             </div>
-                            <div className='pic'>
+                            <div className='pic' onClick={() => console.log(modal)}>
                                 <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
                             </div>
                         </article>
                     );
                 })}
             </Layout>
-            <Modal />
+            <Modal ref={modal} />
         </>
     );
 }
