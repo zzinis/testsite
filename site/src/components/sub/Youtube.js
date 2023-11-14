@@ -28,8 +28,7 @@ function Youtube() {
                                 <p>{vid.snippet.description.length > 200 ? vid.snippet.description.substr(0, 200) + '...' : vid.snippet.description}</p>
                                 <span>{vid.snippet.publishedAt.split('T')[0].split('-').join('.')}</span>
                             </div>
-                            <div className='pic' onClick={() => console.log(modal)}>
-                                <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
+                            <div className='pic' onClick={() => modal.current.open()}>                                <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
                             </div>
                         </article>
                     );
