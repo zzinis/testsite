@@ -2,10 +2,10 @@ import React from 'react'
 
 function Banner() {
     return (
-        <div>
-            banner
-        </div>
-    )
+        <section id='banner' className='myScroll'>
+            Banner
+        </section>
+    );
 }
 
 export default Banner

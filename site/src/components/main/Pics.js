@@ -2,10 +2,10 @@ import React from 'react'
 
 function Pics() {
     return (
-        <div>
-            pics
-        </div>
-    )
+        <section id='pics' className='myScroll'>
+            Pics
+        </section>
+    );
 }
 
 export default Pics

@@ -2,10 +2,10 @@ import React from 'react'
 
 function News() {
     return (
-        <div>
-            news
-        </div>
-    )
+        <section id='news' className='myScroll'>
+            News
+        </section>
+    );
 }
 
 export default News
