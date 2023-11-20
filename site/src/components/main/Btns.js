@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from 'react';
 import Anime from '../../asset/anime';
 
 function Btns() {
+    console.log('btn Called');
+
     const btnRef = useRef(null);
     const pos = useRef([]);
     const [Num, setNum] = useState(0);
@@ -25,9 +27,12 @@ function Btns() {
             {Array(Num)
                 .fill()
                 .map((_, idx) => {
+                    let defaultClass = '';
+                    if (idx === 0) defaultClass = 'on';
                     return (
                         <li
                             key={idx}
+                            className={defaultClass}
                             onClick={() => {
                                 new Anime(window, {
                                     prop: 'scroll',
