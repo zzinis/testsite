@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import Anime from '../../asset/anime';
 
 function Btns() {
     const btnRef = useRef(null);
@@ -24,7 +25,18 @@ function Btns() {
             {Array(Num)
                 .fill()
                 .map((_, idx) => {
-                    return <li key={idx}></li>;
+                    return (
+                        <li
+                            key={idx}
+                            onClick={() => {
+                                new Anime(window, {
+                                    prop: 'scroll',
+                                    value: pos.current[idx],
+                                    duration: 500,
+                                });
+                            }}
+                        ></li>
+                    );
                 })}
         </ul>
     );
