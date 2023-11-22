@@ -32,10 +32,12 @@ function Btns() {
         getPos();
         window.addEventListener('resize', getPos);
         window.addEventListener('scroll', activation);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
         return () => {
             window.removeEventListener('resize', getPos);
             window.removeEventListener('scroll', activation);
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         };
     }, []);
     return (
