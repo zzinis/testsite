@@ -7,6 +7,7 @@ function Btns({ setScrolled, setPos }) {
     const [Num, setNum] = useState(0);
 
     const getPos = () => {
+
         pos.current = [];
         const secs = btnRef.current.parentElement.querySelectorAll('.myScroll');
         for (const sec of secs) pos.current.push(sec.offsetTop);
