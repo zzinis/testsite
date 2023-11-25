@@ -1,9 +1,8 @@
 import React from 'react'
 import Layout from '../common/Layout';
-import { useRef, useEffect } from 'react';
-
+import { useRef, useEffect, useState } from 'react';
 function Contact() {
-
+    const [Traffic, setTraffic] = useState(false);
     const container = useRef(null);
     const { kakao } = window;
     const option = {
@@ -20,11 +19,13 @@ function Contact() {
             position: option.center,
             image: markerImage,
         });
-        marker.setMap(mapInstance);
-    }, []);
+        Traffic ? mapInstance.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) : mapInstance.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+    }, [Traffic]);
+
     return (
         <Layout name={'Contact'}>
             <div id='map' ref={container}></div>
+            <button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic ON' : 'Traffic OFF'}</button>
         </Layout>
     );
 }
