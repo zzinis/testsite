@@ -3,6 +3,7 @@ import Layout from '../common/Layout';
 import { useRef, useEffect, useState } from 'react';
 function Contact() {
     const [Traffic, setTraffic] = useState(false);
+    const [Location, setLocation] = useState(null);
     const container = useRef(null);
     const { kakao } = window;
     const option = {
@@ -19,7 +20,10 @@ function Contact() {
             position: option.center,
             image: markerImage,
         });
-        Traffic ? mapInstance.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) : mapInstance.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+        setLocation(mapInstance);
+    }, []);
+    useEffect(() => {
+        Traffic ? Location.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) : Location.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
     }, [Traffic]);
 
     return (
