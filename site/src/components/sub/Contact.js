@@ -5,16 +5,37 @@ function Contact() {
     const [Traffic, setTraffic] = useState(false);
     const [Location, setLocation] = useState(null);
     const container = useRef(null);
-    const { kakao } = window;
-    const option = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-    };
 
-    //아래 5개 변수값들은 useEffect구문에서 인스턴스 생성할때만 필요한 정보값에 불과하므로 미리 읽히도록 useEffect바깥에 배치
-    const imgSrc = `${process.env.PUBLIC_URL}/img/marker1.png`;
-    const imgSize = new kakao.maps.Size(232, 99);
-    const imgPos = { offset: new kakao.maps.Point(116, 99) };
+
+    //아래 정보값들은 useEffect구문에서 인스턴스 생성할때만 필요한 정보값에 불과하므로 미리 읽히도록 useEffect바깥에 배치
+    const { kakao } = window;
+    const info = [
+        {
+            title: '삼성역 코엑스',
+            latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
+            imgSrc: `${process.env.PUBLIC_URL}/img/marker1.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+        {
+            title: '넥슨 본사',
+            latlng: new kakao.maps.LatLng(37.40211707077346, 127.10344953763003),
+            imgSrc: `${process.env.PUBLIC_URL}/img/marker2.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+        {
+            title: '서울 시청',
+            latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
+            imgSrc: `${process.env.PUBLIC_URL}/img/marker3.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+    ];
+    const option = { center: info[0].latlng, level: 3 };
+    const imgSrc = info[0].imgSrc;
+    const imgSize = info[0].imgSize;
+    const imgPos = info[0].imgPos;
     const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize, imgPos);
     const marker = new kakao.maps.Marker({ position: option.center, image: markerImage });
     useEffect(() => {
@@ -23,8 +44,7 @@ function Contact() {
         setLocation(mapInstance);
     }, []);
     useEffect(() => {
-        //Location state에 담겨있는 맵 인스턴스로부터 traffic레이어 호출 구문 처리 (Traffic state가 변경될 때마다)
-        //첫 렌더링 사이클에서는 Location값이 null이므로 Optional Chaining을 활용해서 해당 값이 담기는 두번째 랜더링 사이클부터 동작하도록 처리
+
         Traffic ? Location?.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) : Location?.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
     }, [Traffic]);
 
