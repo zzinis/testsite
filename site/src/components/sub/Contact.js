@@ -8,7 +8,10 @@ function Contact() {
     const container = useRef(null);
     const form = useRef(null);
     const [Index, setIndex] = useState(0);
-
+    const inputName = useRef(null);
+    const inputEmail = useRef(null);
+    const inputMsg = useRef(null);
+    const [Success, setSuccess] = useState(false);
     const { kakao } = window;
     const info = [
         {
@@ -60,9 +63,14 @@ function Contact() {
         emailjs.sendForm('service_4wnjvjd', 'template_651z7ig', form.current, '23g8RepczesqKPoIX').then(
             (result) => {
                 console.log(result.text);
+                setSuccess(true);
+                inputName.current.value = '';
+                inputEmail.current.value = '';
+                inputMsg.current.value = '';
             },
             (error) => {
                 console.log(error.text);
+                setSuccess(false);
             }
         );
     };
@@ -90,13 +98,12 @@ function Contact() {
             <div id='formBox'>
                 <form ref={form} onSubmit={sendEmail}>
                     <label>Name</label>
-                    <input type='text' name='name' />
-                    <label>Email</label>
-                    <input type='email' name='email' />
-                    <label>Message</label>
-                    <textarea name='message' />
+                    <input type='text' name='name' ref={inputName} />                    <label>Email</label>
+                    <input type='email' name='email' ref={inputEmail} />                    <label>Message</label>
+                    <textarea name='message' ref={inputMsg} />
                     <input type='submit' value='Send' />
                 </form>
+                {Success && <p>메일이 성공적으로 발송되었습니다.</p>}
             </div>
         </Layout>
     );
