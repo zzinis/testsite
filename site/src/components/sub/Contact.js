@@ -50,6 +50,7 @@ function Contact() {
         mapInstance.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
 
         setLocation(mapInstance);
+        mapInstance.setZoomable(false);
         const setCenter = () => {
 
             mapInstance.setCenter(info[Index].latlng);
