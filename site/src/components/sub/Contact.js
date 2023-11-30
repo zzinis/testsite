@@ -7,6 +7,10 @@ function Contact() {
     const [Location, setLocation] = useState(null);
     const container = useRef(null);
     const form = useRef(null);
+
+    const inputName = useRef(null);
+    const inputEmail = useRef(null);
+    const inputMsg = useRef(null);
     const [Index, setIndex] = useState(0);
     const inputName = useRef(null);
     const inputEmail = useRef(null);
