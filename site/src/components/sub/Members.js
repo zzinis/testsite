@@ -15,12 +15,21 @@ function Members() {
         //기존 초기 Val State값을 deep copy해서 현재 입력하고 있는 항목의 name값과 value값으로 기존 State를 덮어쓰기 해서 변경 (불변성 유지)
         setVal({ ...Val, [name]: value });
     };
+
+    const check = (value) => {
+        //인수로 현재 State값을 전달받아서 인증 통과시 true, 실패시 false를 반환하는 로직
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('현재 스테이트값', Val);
+        console.log(check(Val));
+    };
     useEffect(() => {
         console.log(Val);
     }, [Val]);
     return (
         <Layout name={'Member'}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <fieldset>
                     <legend className='h'>회원가입 폼 양식</legend>
                     <table>
