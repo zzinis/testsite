@@ -7,6 +7,7 @@ function Members() {
         pwd1: '',
         pwd2: '',
         email: '',
+        gender: false,
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({});
@@ -16,6 +17,10 @@ function Members() {
         const { name, value } = e.target;
         //기존 초기 Val State값을 deep copy해서 현재 입력하고 있는 항목의 name값과 value값으로 기존 State를 덮어쓰기 해서 변경 (불변성 유지)
         setVal({ ...Val, [name]: value });
+    };
+    const handleRadio = (e) => {
+        const { name, checked } = e.target;
+        setVal({ ...Val, [name]: checked });
     };
 
     const check = (value) => {
@@ -37,6 +42,9 @@ function Members() {
         }
         if (value.email.length < 8 || !/@/.test(value.email)) {
             errs.email = '이메일주소는 8글자 이상 @를 포함하세요.';
+        }
+        if (!value.gender) {
+            errs.gender = '성별을 체크해주세요.';
         }
         return errs;
     };
@@ -75,6 +83,8 @@ function Members() {
                                         placeholder='아이디를 입력하세요'
                                         onChange={handleChange}
                                     />
+                                    <br />
+                                    <p>{Err.userid}</p>
                                 </td>
                             </tr>
                             {/* password */}
@@ -90,6 +100,8 @@ function Members() {
                                         placeholder='비밀번호를 입력하세요'
                                         onChange={handleChange}
                                     />
+                                    <br />
+                                    <p>{Err.pwd1}</p>
                                 </td>
                             </tr>
                             {/* re password */}
@@ -105,6 +117,8 @@ function Members() {
                                         placeholder='비밀번호를 재입력하세요'
                                         onChange={handleChange}
                                     />
+                                    <br />
+                                    <p>{Err.pwd2}</p>
                                 </td>
                             </tr>
 
@@ -121,6 +135,20 @@ function Members() {
                                         placeholder='이메일주소를 입력하세요'
                                         onChange={handleChange}
                                     />
+                                    <br />
+                                    <p>{Err.email}</p>
+                                </td>
+                            </tr>
+                            {/* gender */}
+                            <tr>
+                                <th>GENDER</th>
+                                <td>
+                                    <label htmlFor='male'>Male</label>
+                                    <input type='radio' name='gender' value='male' id='mail' onChange={handleRadio} />
+                                    <label htmlFor='female'>FeMale</label>
+                                    <input type='radio' name='gender' value='female' id='female' onChange={handleRadio} />
+                                    <br />
+                                    <p>{Err.gender}</p>
                                 </td>
                             </tr>
                             {/* btn set */}
