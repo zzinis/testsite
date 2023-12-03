@@ -84,7 +84,7 @@ function Members() {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <p>{Err.userid}</p>
+                                    {Err.userid && <p>{Err.userid}</p>}
                                 </td>
                             </tr>
                             {/* password */}
@@ -101,7 +101,7 @@ function Members() {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <p>{Err.pwd1}</p>
+                                    {Err.pwd1 && <p>{Err.pwd1}</p>}
                                 </td>
                             </tr>
                             {/* re password */}
@@ -118,7 +118,7 @@ function Members() {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <p>{Err.pwd2}</p>
+                                    {Err.pwd2 && <p>{Err.pwd2}</p>}
                                 </td>
                             </tr>
 
@@ -136,7 +136,7 @@ function Members() {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <p>{Err.email}</p>
+                                    {Err.email && <p>{Err.email}</p>}
                                 </td>
                             </tr>
                             {/* gender */}
@@ -148,7 +148,7 @@ function Members() {
                                     <label htmlFor='female'>FeMale</label>
                                     <input type='radio' name='gender' value='female' id='female' onChange={handleRadio} />
                                     <br />
-                                    <p>{Err.gender}</p>
+                                    {Err.gender && <p>{Err.gender}</p>}
                                 </td>
                             </tr>
                             {/* btn set */}
