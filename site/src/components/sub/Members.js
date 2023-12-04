@@ -9,6 +9,7 @@ function Members() {
         email: '',
         gender: false,
         interests: false,
+        edu: '',
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({});
@@ -32,6 +33,21 @@ function Members() {
         inputs.forEach((el) => el.checked && (isChecked = true));
         setVal({ ...Val, [name]: isChecked });
     };
+
+    const handleSelect = (e) => {
+        const { name, value } = e.target;
+        setVal({ ...Val, [name]: value });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('현재 스테이트값', Val);
+        //check가 반환하는 인증 메세지가 있으면 해당 메세지를 화면에 출력하고 전송중지
+        //그렇지 않으면 인증 성공
+        console.log(check(Val));
+        setErr(check(Val));
+        setSubmit(true);
+    };
+
     const check = (value) => {
         //인수로 현재 State값을 전달받아서 항목별로 에러메세지를 객체로 반환하는 함수
         //반환되는 에러메세지가 있으면 인증 실패
@@ -58,15 +74,12 @@ function Members() {
         if (!value.interests) {
             errs.interests = '관심사를 하나 이상 체크하세요.';
         }
+        if (value.edu === '') {
+            errs.edu = '최종학력을 선택하세요.';
+        }
         return errs;
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('현재 스테이트값', Val);
-        console.log(check(Val));
-        setErr(check(Val));
-        setSubmit(true);
-    };
+
     useEffect(() => {
         //객체의 키값을 배열로 반환한다음 해당 배열의 갯수를 저장
         //len값이 0이면 Err객체에 에러메시지가 하나도 없어서 인증통과 처리
@@ -181,6 +194,23 @@ function Members() {
                                     {Err.interests && <p>{Err.interests}</p>}
                                 </td>
                             </tr>
+                            {/* education */}
+                            <tr>
+                                <th>
+                                    <label htmlFor='edu'>EDUCATION</label>
+                                </th>
+                                <td>
+                                    <select name='edu' id='edu' onChange={handleSelect}>
+                                        <option value=''>최종학력을 선택하세요</option>
+                                        <option value='elementary-school'>초등학교 졸업</option>
+                                        <option value='middle-school'>중학교 졸업</option>
+                                        <option value='high-school'>고등학교 졸업</option>
+                                        <option value='college'>대학교 졸업</option>
+                                    </select>
+                                    {Err.edu && <p>{Err.edu}</p>}
+                                </td>
+                            </tr>
+
                             {/* btn set */}
                             <tr>
                                 <th colSpan='2'>
