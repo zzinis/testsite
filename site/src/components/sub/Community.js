@@ -18,6 +18,7 @@ function Community() {
         resetForm();
     };
     const deletePost = (delIndex) => {
+        if (!window.confirm('해당 게시글을 삭제하겠습니까?')) return;
         setPosts(Posts.filter((_, idx) => idx !== delIndex));
     };
     useEffect(() => {
