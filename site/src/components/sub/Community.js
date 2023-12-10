@@ -49,18 +49,30 @@ function Community() {
                 {Posts.map((post, idx) => {
                     return (
                         <article key={idx}>
-                            <div className='txt'>
-                                <h2>{post.title}</h2>
-                                <p>{post.content}</p>
-                            </div>
-                            <nav className='btnSet'>
-                                <button onClick={() => enableUpdate(idx)}>EDIT</button>
-                                <button onClick={() => deletePost(idx)}>DELETE</button>                            </nav>
+                            {post.enableUpdate ? (
+                                //수정모드
+                                <>
+                                    <p>수정모드</p>
+                                </>
+                            ) : (
+                                //출력모드
+                                <>
+                                    <div className='txt'>
+                                        <h2>{post.title}</h2>
+                                        <p>{post.content}</p>
+                                    </div>
+                                    <nav className='btnSet'>
+                                        <button onClick={() => enableUpdate(idx)}>EDIT</button>
+                                        <button onClick={() => deletePost(idx)}>DELETE</button>
+                                    </nav>
+                                </>
+                            )
+                            }
                         </article>
                     );
                 })}
             </div>
-        </Layout>
+        </Layout >
     );
 }
 
