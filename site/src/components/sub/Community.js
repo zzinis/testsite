@@ -62,11 +62,11 @@ function Community() {
                 return post;
             })
         );
+        setAllowed(true);
+
     };
 
-    useEffect(() => {
-        console.log(Posts);
-    }, [Posts]);
+
     return (
         <Layout name={'Community'}>
             <div className='inputBox'>
