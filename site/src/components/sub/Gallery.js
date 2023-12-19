@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Layout from '../common/Layout';
+import Masonry from 'react-masonry-component';
+
 
 function Gallery() {
     const getFlickr = async (opt) => {
@@ -21,26 +23,28 @@ function Gallery() {
         setItems(result.data.photos.photo);
     };
 
-    useEffect(() => getFlickr({ type: 'user', user: '' }), []);
+    useEffect(() => getFlickr({ type: 'interest' }), []);
 
     return (
         <Layout name={'Gallery'}>
             <div className='frame'>
-                {Items.map((item, idx) => {
-                    return (
-                        <article key={idx}>
-                            <div className='inner'>
-                                <div className='pic'>
-                                    <img
-                                        src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-                                        alt={item.title}
-                                    />
+                <Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
+                    {Items.map((item, idx) => {
+                        return (
+                            <article key={idx}>
+                                <div className='inner'>
+                                    <div className='pic'>
+                                        <img
+                                            src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+                                            alt={item.title}
+                                        />
+                                    </div>
+                                    <h2>{item.title}</h2>
                                 </div>
-                                <h2>{item.title}</h2>
-                            </div>
-                        </article>
-                    );
-                })}
+                            </article>
+                        );
+                    })}
+                </Masonry>
             </div>
         </Layout>
     );
