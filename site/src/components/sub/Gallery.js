@@ -5,6 +5,8 @@ import Masonry from 'react-masonry-component';
 
 
 function Gallery() {
+    const searchInput = useRef(null);
+
     const enableEvent = useRef(true);
     const btnSet = useRef(null);
 
@@ -88,6 +90,15 @@ function Gallery() {
         //새로운 데이터로 갤러리 생성 함수 호출
         getFlickr({ type: 'user', user: '164021883@N04' });
     };
+    const showSearch = (e) => {
+        const tag = searchInput.current.value.trim();
+        if (tag === '') return alert('검색어를 입력하세요.');
+        if (!enableEvent.current) return;
+
+        resetGallery(e);
+        getFlickr({ type: 'search', tags: tag });
+        searchInput.current.value = '';
+    };
     useEffect(() => getFlickr({ type: 'user', user: '' }), []);
 
     return (
@@ -116,6 +127,10 @@ function Gallery() {
                 >
                     My Gallery
                 </button>
+            </div>
+            <div className='searchBox'>
+                <input type='text' placeholder='검색어를 입력하세요.' ref={searchInput} onKeyPress={(e) => e.key === 'Enter' && showSearch(e)} />
+                <button onClick={showSearch}>Seach</button>
             </div>
             <div className='frame' ref={frame}>
                 <Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
