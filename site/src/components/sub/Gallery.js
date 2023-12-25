@@ -32,6 +32,11 @@ function Gallery() {
         if (opt.type === 'user') url = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.user}`;
 
         const result = await axios.get(url);
+        if (result.data.photos.photo.length === 0) {
+            setLoader(false);
+            frame.current.classList.add('on');
+            return alert('이미지 결과값이 없습니다.');
+        }
         setItems(result.data.photos.photo);
         //외부데이터가 State에 담기고 DOM이 생성되는 순간
         //모든 img요소를 찾아서 반복처리
