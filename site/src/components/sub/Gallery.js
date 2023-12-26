@@ -5,6 +5,8 @@ import Masonry from 'react-masonry-component';
 
 
 function Gallery() {
+    const isUser = useRef(true);
+
     const searchInput = useRef(null);
 
     const enableEvent = useRef(true);
@@ -86,6 +88,8 @@ function Gallery() {
 
         //새로운 데이터로 갤러리 생성 함수 호출
         getFlickr({ type: 'interest' });
+        isUser.current = false;
+
     };
 
     const showMine = (e) => {
@@ -107,6 +111,8 @@ function Gallery() {
         resetGallery(e);
         getFlickr({ type: 'search', tags: tag });
         searchInput.current.value = '';
+        isUser.current = false;
+
     };
     useEffect(() => getFlickr({ type: 'user', user: '' }), []);
 
@@ -114,9 +120,7 @@ function Gallery() {
         <Layout name={'Gallery'}>
             <div className='btnSet' ref={btnSet}>
                 <button onClick={showInterest}>Interest Gallery</button>
-
                 <button className='on' onClick={showMine}>
-
                     Interest Gallery
                 </button>
 
@@ -159,13 +163,16 @@ function Gallery() {
                                         />
                                         <span
                                             onClick={(e) => {
+                                                if (isUser.current) return;
+                                                isUser.current = true;
                                                 setLoader(true);
                                                 frame.current.classList.remove('on');
                                                 getFlickr({ type: 'user', user: e.target.innerText });
                                             }}
                                         >
                                             {item.owner}
-                                        </span>                                    </div>
+                                        </span>
+                                    </div>
                                 </div>
                             </article>
                         );
