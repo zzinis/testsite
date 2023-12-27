@@ -18,7 +18,6 @@ function Gallery() {
     const [Loader, setLoader] = useState(true);
 
     const getFlickr = async (opt) => {
-        console.log('getFlickr');
 
         //getFlickr함수가 재실행될떄마다 어차피 counter값을 초기화되어야 하므로 useRef가 아닌 일반 지역변수로 설정
         let counter = 0;
@@ -34,7 +33,6 @@ function Gallery() {
         if (opt.type === 'user') url = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.user}`;
 
         const result = await axios.get(url);
-        console.log(result.data.photos.photo);
 
         if (result.data.photos.photo.length === 0) {
             setLoader(false);
@@ -49,12 +47,10 @@ function Gallery() {
         //외부데이터가 State에 담기고 DOM이 생성되는 순간
         //모든 img요소를 찾아서 반복처리
         const imgs = frame.current.querySelectorAll('img');
-        console.log('imgDOM의 전체 갯수', imgs.length);
 
         imgs.forEach((img) => {
             img.onload = () => {
                 ++counter;
-                console.log(counter);
                 //임시방편 - 전체 이미지 갯수가 하나 모잘라도 출력되게 수정
                 //문제점 - myGallery, interestGallery는 전체 이미지 카운트가 잘 되는데 특정 사용자 갤러리만 갯수가 1씩 모자라는 현상
 
