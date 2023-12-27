@@ -27,13 +27,15 @@ function Gallery() {
         const method_interest = 'flickr.interestingness.getList';
         const method_user = 'flickr.people.getPhotos';
         const method_search = 'flickr.photos.search';
-        const num = 50;
+        const num = 20;
         let url = '';
         if (opt.type === 'interest') url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
         if (opt.type === 'search') url = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.tags}`;
         if (opt.type === 'user') url = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.user}`;
 
         const result = await axios.get(url);
+        console.log(result.data.photos.photo);
+
         if (result.data.photos.photo.length === 0) {
             setLoader(false);
             frame.current.classList.add('on');
@@ -54,7 +56,8 @@ function Gallery() {
                 //임시방편 - 전체 이미지 갯수가 하나 모잘라도 출력되게 수정
                 //문제점 - myGallery, interestGallery는 전체 이미지 카운트가 잘 되는데 특정 사용자 갤러리만 갯수가 1씩 모자라는 현상
 
-                if (counter === imgs.length - 1) {
+                //검색결과물에서 특정 사용자를 클릭하면 다시 결과값이 하나 적게 리턴되는 문제 (해결필요)
+                if (counter === imgs.length - 2) {
                     setLoader(false);
                     frame.current.classList.add('on');
                     //모션중 재이벤트 방지시 모션이 끝날때까지 이벤트를 방지를 시켜도
