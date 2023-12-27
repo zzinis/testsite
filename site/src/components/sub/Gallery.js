@@ -2,9 +2,12 @@ import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import Layout from '../common/Layout';
 import Masonry from 'react-masonry-component';
+import Modal from '../common/Modal';
 
 
 function Gallery() {
+    const openModal = useRef(null);
+
     const isUser = useRef(true);
 
     const searchInput = useRef(null);
@@ -105,7 +108,7 @@ function Gallery() {
         resetGallery(e);
 
         //새로운 데이터로 갤러리 생성 함수 호출
-        getFlickr({ type: 'user', user: '164021883@N04' });
+        getFlickr({ type: 'user', user: '' });
     };
     const showSearch = (e) => {
         const tag = searchInput.current.value.trim();
@@ -121,72 +124,62 @@ function Gallery() {
     useEffect(() => getFlickr({ type: 'user', user: '' }), []);
 
     return (
-        <Layout name={'Gallery'}>
-            <div className='btnSet' ref={btnSet}>
-                <button onClick={showInterest}>Interest Gallery</button>
-                <button className='on' onClick={showMine}>
-                    Interest Gallery
-                </button>
+        <>
+            <Layout name={'Gallery'}>
+                <div className='btnSet' ref={btnSet}>
+                    <button onClick={showInterest}>Interest Gallery</button>
 
-                <button
-                    className='on'
-                    onClick={(e) => {
-                        //재이벤트, 모션중 재이벤트 방지
-                        if (!enableEvent.current) return;
-                        if (e.target.classList.contains('on')) return;
+                    <button className='on' onClick={showMine}>
+                        My Gallery
+                    </button>
+                </div>
 
-                        //기존 갤러리 초기화 함수 호출
-                        resetGallery(e);
+                <div className='searchBox'>
+                    <input type='text' placeholder='검색어를 입력하세요.' ref={searchInput} onKeyPress={(e) => e.key === 'Enter' && showSearch(e)} />
+                    <button onClick={showSearch}>Seach</button>
+                </div>
 
-                        //새로운 데이터로 갤러리 생성 함수 호출
-                        getFlickr({ type: 'user', user: '164021883@N04' });
-                    }}
-                >
-                    My Gallery
-                </button>
-            </div>
-            <div className='searchBox'>
-                <input type='text' placeholder='검색어를 입력하세요.' ref={searchInput} onKeyPress={(e) => e.key === 'Enter' && showSearch(e)} />
-                <button onClick={showSearch}>Seach</button>
-            </div>
-            <div className='frame' ref={frame}>
-                <Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
-                    {Items.map((item, idx) => {
-                        return (
-                            <article key={idx}>
-                                <div className='inner'>
-                                    <div className='pic'>
-                                        <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
+                <div className='frame' ref={frame}>
+                    <Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
+                        {Items.map((item, idx) => {
+                            return (
+                                <article key={idx}>
+                                    <div className='inner'>
+                                        <div className='pic' onClick={() => openModal.current.open()}>
+                                            <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
+                                        </div>
+                                        <h2>{item.title}</h2>
+                                        <div className='profile'>
+                                            <img
+                                                src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+                                                alt={item.owner}
+                                                onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
+                                            />
+                                            <span
+                                                onClick={(e) => {
+                                                    if (isUser.current) return;
+                                                    isUser.current = true;
+                                                    setLoader(true);
+                                                    frame.current.classList.remove('on');
+                                                    getFlickr({ type: 'user', user: e.target.innerText });
+                                                }}
+                                            >
+                                                {item.owner}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <h2>{item.title}</h2>
-                                    <div className='profile'>
-                                        <img
-                                            src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
-                                            alt={item.owner}
-                                            onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
-                                        />
-                                        <span
-                                            onClick={(e) => {
-                                                if (isUser.current) return;
-                                                isUser.current = true;
-                                                setLoader(true);
-                                                frame.current.classList.remove('on');
-                                                getFlickr({ type: 'user', user: e.target.innerText });
-                                            }}
-                                        >
-                                            {item.owner}
-                                        </span>
-                                    </div>
-                                </div>
-                            </article>
-                        );
-                    })}
-                </Masonry>
-            </div>
-            {Loader && <img className='loader' src={`${process.env.PUBLIC_URL}/img/loading.gif`} alt='loader' />}
-        </Layout>
+                                </article>
+                            );
+                        })}
+                    </Masonry>
+                </div>
+                {Loader && <img className='loader' src={`${process.env.PUBLIC_URL}/img/loading.gif`} alt='loader' />}
+            </Layout>
+
+            <Modal ref={openModal}></Modal>
+
+        </>
     );
 }
-
 
 export default Gallery
