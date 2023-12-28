@@ -3,9 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import Layout from '../common/Layout';
 import Masonry from 'react-masonry-component';
 import Modal from '../common/Modal';
+const [Index, setIndex] = useState(0);
 
 
 function Gallery() {
+
     const openModal = useRef(null);
 
     const isUser = useRef(true);
@@ -19,6 +21,8 @@ function Gallery() {
     //const counter = useRef(0);
     const [Items, setItems] = useState([]);
     const [Loader, setLoader] = useState(true);
+    const [Index, setIndex] = useState(0);
+
 
     const getFlickr = async (opt) => {
 
@@ -128,12 +132,10 @@ function Gallery() {
             <Layout name={'Gallery'}>
                 <div className='btnSet' ref={btnSet}>
                     <button onClick={showInterest}>Interest Gallery</button>
-
                     <button className='on' onClick={showMine}>
                         My Gallery
                     </button>
                 </div>
-
                 <div className='searchBox'>
                     <input type='text' placeholder='검색어를 입력하세요.' ref={searchInput} onKeyPress={(e) => e.key === 'Enter' && showSearch(e)} />
                     <button onClick={showSearch}>Seach</button>
@@ -145,7 +147,13 @@ function Gallery() {
                             return (
                                 <article key={idx}>
                                     <div className='inner'>
-                                        <div className='pic' onClick={() => openModal.current.open()}>
+                                        <div
+                                            className='pic'
+                                            onClick={() => {
+                                                openModal.current.open();
+                                                setIndex(idx);
+                                            }}
+                                        >
                                             <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
                                         </div>
                                         <h2>{item.title}</h2>
@@ -177,7 +185,7 @@ function Gallery() {
             </Layout>
 
             <Modal ref={openModal}>
-                <img src={`https://live.staticflickr.com/${Items[0]?.server}/${Items[0]?.id}_${Items[0]?.secret}_b.jpg`} alt={Items[0]?.title} />
+                <img src={`https://live.staticflickr.com/${Items[Index]?.server}/${Items[Index]?.id}_${Items[Index]?.secret}_b.jpg`} alt={Items[Index]?.title} />
             </Modal>
         </>
     );
