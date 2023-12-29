@@ -33,7 +33,7 @@ function Gallery() {
         const method_interest = 'flickr.interestingness.getList';
         const method_user = 'flickr.people.getPhotos';
         const method_search = 'flickr.photos.search';
-        const num = 10;
+        const num = 40;
         let url = '';
         if (opt.type === 'interest') url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
         if (opt.type === 'search') url = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.tags}`;
