@@ -1,11 +1,14 @@
-import React from 'react'
+import { useRef } from 'react';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, NavLink } from 'react-router-dom';
 import Menu from './Menu';
 
 
+
 function Header({ type }) {
+    const toggleMenu = useRef(null);
+
     const active = 'on';
 
     return (
@@ -46,10 +49,15 @@ function Header({ type }) {
                         </NavLink>
                     </li>
                 </ul>
-                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon
+                    icon={faBars}
+                    onClick={() => {
+                        toggleMenu.current.toggle();
+                    }}
+                />
             </header>
 
-            <Menu />
+            <Menu ref={toggleMenu} />
         </>
     );
 }
