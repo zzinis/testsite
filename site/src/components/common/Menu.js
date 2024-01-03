@@ -19,6 +19,8 @@ const Menu = forwardRef((props, ref) => {
                     initial={{ opacity: 0, x: -280 }}
                     animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
                     exit={{ opacity: 0, x: -280, transition: { duration: 0.5 } }}
+                    onClick={() => setOpen(false)}
+
                 >
                     <h1>
                         <Link to='/'>LOGO</Link>
