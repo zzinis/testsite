@@ -7,12 +7,12 @@ import Vids from './Vids';
 import Banner from './Banner';
 
 import Btns from './Btns';
-function Main() {
+function Main({ menu }) {
     const [Scrolled, setScrolled] = useState(0);
     const [Pos, setPos] = useState([]);
     return (
         <main>
-            <Header type={'main'} />
+            <Header type={'main'} menu={menu} />
             <Visual />
             <News />
             <Pics Scrolled={Scrolled} Pos={Pos[2]} />
