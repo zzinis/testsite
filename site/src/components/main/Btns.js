@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import Anime from '../../asset/anime';
 
 function Btns({ setScrolled, setPos }) {
@@ -6,16 +6,16 @@ function Btns({ setScrolled, setPos }) {
     const pos = useRef([]);
     const [Num, setNum] = useState(0);
 
-    const getPos = () => {
+    const getPos = useCallback(() => {
 
         pos.current = [];
         const secs = btnRef.current.parentElement.querySelectorAll('.myScroll');
         for (const sec of secs) pos.current.push(sec.offsetTop);
         setNum(pos.current.length);
         setPos(pos.current);
-    };
+    }, [setPos]);
 
-    const activation = () => {
+    const activation = useCallback(() => {
         const base = -window.innerHeight / 2;
         const scroll = window.scrollY;
         const btns = btnRef.current.children;
@@ -30,7 +30,8 @@ function Btns({ setScrolled, setPos }) {
                 boxs[idx].classList.add('on');
             }
         });
-    };
+    }, [setScrolled]);
+
     useEffect(() => {
         getPos();
         window.addEventListener('resize', getPos);
@@ -42,7 +43,7 @@ function Btns({ setScrolled, setPos }) {
             window.removeEventListener('scroll', activation);
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         };
-    }, []);
+    }, [getPos, activation]);
     return (
         <ul className='btnNavi' ref={btnRef}>
             {/* 현재 세로 위치값이 담겨있는 배열의 갯수로 빈배열 동적으로 생성하고 버튼 반복처리 */}
