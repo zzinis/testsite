@@ -1,12 +1,12 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, NavLink } from 'react-router-dom';
-
+import { memo } from 'react';
 
 
 
 function Header({ type, menu }) {
-
+    console.log('header');
     const active = 'on';
 
     return (
@@ -59,4 +59,4 @@ function Header({ type, menu }) {
     );
 }
 
-export default Header;
+export default memo(Header);
