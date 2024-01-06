@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react';
 
 function Vids() {
     return (
@@ -8,4 +8,4 @@ function Vids() {
     );
 }
 
-export default Vids
+export default memo(Vids);
