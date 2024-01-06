@@ -20,7 +20,7 @@ function News() {
 
     useEffect(() => {
         localStorage.setItem('post', JSON.stringify(Posts));
-    }, []);
+    }, [Posts]);
     return (
         <section id='news' className='myScroll'>
             {Posts.map((post, idx) => {
