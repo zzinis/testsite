@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Layout from '../common/Layout';
 import Masonry from 'react-masonry-component';
 import Modal from '../common/Modal';
@@ -24,7 +24,7 @@ function Gallery() {
     const [Index, setIndex] = useState(0);
 
 
-    const getFlickr = async (opt) => {
+    const getFlickr = useCallback(async (opt) => {
 
         //getFlickr함수가 재실행될떄마다 어차피 counter값을 초기화되어야 하므로 useRef가 아닌 일반 지역변수로 설정
         let counter = 0;
@@ -81,7 +81,7 @@ function Gallery() {
                 }
             };
         });
-    };
+    }, []);
     //기존 갤러리 초기화 함수
     const resetGallery = (e) => {
         const btns = btnSet.current.querySelectorAll('button');
@@ -128,7 +128,7 @@ function Gallery() {
         isUser.current = false;
 
     };
-    useEffect(() => getFlickr({ type: 'user', user: '' }), []);
+    useEffect(() => getFlickr({ type: 'user', user: '' }), [getFlickr]);
 
     return (
         <>
