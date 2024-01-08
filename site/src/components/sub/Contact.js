@@ -8,16 +8,14 @@ function Contact() {
     const container = useRef(null);
     const form = useRef(null);
 
-    const inputName = useRef(null);
-    const inputEmail = useRef(null);
-    const inputMsg = useRef(null);
+
     const [Index, setIndex] = useState(0);
     const inputName = useRef(null);
     const inputEmail = useRef(null);
     const inputMsg = useRef(null);
     const [Success, setSuccess] = useState(false);
     const { kakao } = window;
-    const info = [
+    const info = useRef([
         {
             title: '삼성역 코엑스',
             latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
@@ -39,16 +37,19 @@ function Contact() {
             imgSize: new kakao.maps.Size(232, 99),
             imgPos: { offset: new kakao.maps.Point(116, 99) },
         },
-    ];
-    const option = { center: info[Index].latlng, level: 3 };
-    const imgSrc = info[Index].imgSrc;
-    const imgSize = info[Index].imgSize;
-    const imgPos = info[Index].imgPos;
-    const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize, imgPos);
-    const marker = new kakao.maps.Marker({ position: option.center, image: markerImage });
+    ]);
+
+    const marker = new kakao.maps.Marker({
+        position: info.current[Index].latlng,
+        image: new kakao.maps.MarkerImage(
+            info.current[Index].imgSrc,
+            info.current[Index].imgSize,
+            info.current[Index].imgPos
+        ),
+    });
     useEffect(() => {
         container.current.innerHTML = '';
-        const mapInstance = new kakao.maps.Map(container.current, option);
+        const mapInstance = new kakao.maps.Map(container.current, { center: info.current[Index].latlng, level: 3 });
         //지도인스턴스에 타입, 줌 컨트롤 추가
         mapInstance.addControl(new kakao.maps.MapTypeControl(), kakao.maps.ControlPosition.TOPRIGHT);
         mapInstance.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
@@ -57,7 +58,7 @@ function Contact() {
         mapInstance.setZoomable(false);
         const setCenter = () => {
 
-            mapInstance.setCenter(info[Index].latlng);
+            mapInstance.setCenter(info.current[Index].latlng);
         };
         window.addEventListener('resize', setCenter);
         return () => window.removeEventListener('resize', setCenter);
@@ -91,7 +92,7 @@ function Contact() {
             <button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic ON' : 'Traffic OFF'}</button>
             {/* 배열정보값을 토대로 동적으로 li지점버튼 생성하고 해당 버튼 클릭할때 순서값 State를 변경하면서 지도화면이 갱신되도록 수정 */}
             <ul className='branch'>
-                {info.map((el, idx) => {
+                {info.current.map((el, idx) => {
                     return (
                         <li key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
                             {el.title}
