@@ -1,17 +1,11 @@
 import React from 'react'
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 
 import Layout from '../common/Layout';
 
 function Department() {
-    const [Members, setMembers] = useState([]);
-    console.log(Members);
-    useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/DB/members.json`).then((data) => {
-            setMembers(data.data.members);
-        });
-    }, []);
+    const Members = useSelector((store) => store.department.data);
 
     return (
         // props으로 자식요소에 줄바꿈될 텍스트를 전달하고 싶을떄
