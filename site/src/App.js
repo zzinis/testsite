@@ -20,6 +20,8 @@ import Member from './components/sub/Member';
 import Youtube from './components/sub/Youtube';
 
 import './scss/style.scss';
+import { fetchDepartment } from './redux/departmentSlice';
+
 import { fetchYoutube } from './redux/youtubeSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -39,6 +41,8 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchYoutube());
+    dispatch(fetchDepartment());
+
   }, [dispatch]);
 
   return (
