@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFlickr } from '../../redux/flickrSlice';
 import Layout from '../common/Layout';
 import Masonry from 'react-masonry-component';
 import Modal from '../common/Modal';
@@ -7,19 +8,15 @@ const [Index, setIndex] = useState(0);
 
 
 function Gallery() {
-
+    const dispatch = useDispatch();
     const openModal = useRef(null);
-
     const isUser = useRef(true);
-
     const searchInput = useRef(null);
-
     const enableEvent = useRef(true);
     const btnSet = useRef(null);
-
     const frame = useRef(null);
     //const counter = useRef(0);
-    const [Items, setItems] = useState([]);
+    const Items = useSelector((store) => store.flickr.data);
     const [Loader, setLoader] = useState(true);
     const [Index, setIndex] = useState(0);
 
@@ -101,7 +98,9 @@ function Gallery() {
         resetGallery(e);
 
         //새로운 데이터로 갤러리 생성 함수 호출
-        getFlickr({ type: 'interest' });
+        // getFlickr({ type: 'interest' });
+        dispatch(fetchFlickr({ type: 'interest' }));
+
         isUser.current = false;
 
     };
@@ -115,7 +114,7 @@ function Gallery() {
         resetGallery(e);
 
         //새로운 데이터로 갤러리 생성 함수 호출
-        getFlickr({ type: 'user', user: '' });
+        dispatch(fetchFlickr({ type: 'user', user: '' }));
     };
     const showSearch = (e) => {
         const tag = searchInput.current.value.trim();
@@ -123,13 +122,14 @@ function Gallery() {
         if (!enableEvent.current) return;
 
         resetGallery(e);
-        getFlickr({ type: 'search', tags: tag });
+        dispatch(fetchFlickr({ type: 'search', tags: tag }));
         searchInput.current.value = '';
         isUser.current = false;
 
     };
-    useEffect(() => getFlickr({ type: 'user', user: '' }), [getFlickr]);
-
+    useEffect(() => {
+        console.log(Items);
+    }, [Items]);
     return (
         <>
             <Layout name={'Gallery'}>
@@ -181,7 +181,7 @@ function Gallery() {
                                                     isUser.current = true;
                                                     setLoader(true);
                                                     frame.current.classList.remove('on');
-                                                    getFlickr({ type: 'user', user: e.target.innerText });
+                                                    dispatch(fetchFlickr({ type: 'user', user: e.target.innerText }));
                                                 }}
                                             >
                                                 {item.owner}
