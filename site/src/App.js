@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import { useRef } from 'react';
 
 //common
 import Footer from './components/common/Footer';
@@ -36,7 +35,6 @@ import { useDispatch } from 'react-redux';
 */
 
 function App() {
-  const menu = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,8 +48,8 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path='/' render={() => <Main menu={menu} />} />
-        <Route path='/' render={() => <Header type={'sub'} menu={menu} />} />
+        <Route exact path='/' render={() => <Main />} />
+        <Route path='/' render={() => <Header type={'sub'} />} />
       </Switch>
 
       <Route path='/department' component={Department} />
@@ -62,7 +60,7 @@ function App() {
       <Route path='/member' component={Member} />
 
       <Footer />
-      <Menu ref={menu} />
+      <Menu />
     </>
   );
 }
