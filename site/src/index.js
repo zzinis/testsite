@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import youtubeReducer from './redux/youtubeSlice';
 import departmentReducer from './redux/departmentSlice';
 import flickrReducer from './redux/flickrSlice';
+import menuReducer from './redux/menuSlice';
 
 
 
@@ -15,6 +16,7 @@ const store = configureStore({
     youtube: youtubeReducer,
     department: departmentReducer,
     flickr: flickrReducer,
+    menu: menuReducer,
 
 
   },
