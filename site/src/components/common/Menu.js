@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { close } from '../../redux/menuSlice';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavLink, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 function Menu() {
@@ -19,6 +20,11 @@ function Menu() {
     const dispatch = useDispatch();
     const menu = useSelector((store) => store.menu.open);
 
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1200) dispatch(close());
+        });
+    }, [dispatch]);
 
     return (
         <AnimatePresence>
