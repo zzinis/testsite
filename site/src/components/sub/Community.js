@@ -80,7 +80,7 @@ function Community() {
 
 
     return (
-        <Layout name={'Community'}>
+        <Layout name={'Community'} bg={'Community.jpg'}>
             <div className='inputBox'>
                 <input type='text' placeholder='제목을 입력하세요.' ref={input} />
                 <br />

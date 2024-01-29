@@ -8,7 +8,6 @@ function Contact() {
     const container = useRef(null);
     const form = useRef(null);
 
-
     const [Index, setIndex] = useState(0);
     const inputName = useRef(null);
     const inputEmail = useRef(null);
@@ -91,7 +90,7 @@ function Contact() {
     //해당 정보값이 바뀌지않는 static한 값이 아니고 State에 의해서 계속 변경되는 값이기 때문에
     //내부에 index State값이 바뀔때마 임시로 메모이제이션을 풀기 위해서 useMemo에 Index State를 의존성 배열에 등록해야 되기 때문
     return (
-        <Layout name={'Contact'}>
+        <Layout name={'Contact'} bg={'Location.jpg'}>
             <div id='map' ref={container}></div>
             <button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic ON' : 'Traffic OFF'}</button>
             {/* 배열정보값을 토대로 동적으로 li지점버튼 생성하고 해당 버튼 클릭할때 순서값 State를 변경하면서 지도화면이 갱신되도록 수정 */}

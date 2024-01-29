@@ -161,7 +161,7 @@ function Gallery() {
     }, [Items, dispatch]);
     return (
         <>
-            <Layout name={'Gallery'}>
+            <Layout name={'Gallery'} bg={'Gallery.jpg'}>
                 <div className='btnSet' ref={btnSet}>
                     <button onClick={showInterest}>Interest Gallery</button>
                     <button className='on' onClick={showMine}>
