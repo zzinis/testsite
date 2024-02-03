@@ -24,6 +24,8 @@ import { fetchFlickr } from './redux/flickrSlice';
 import { fetchYoutube } from './redux/youtubeSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 //Menu컴포넌를 App에서 호출한뒤 토글 객체를 각각 메인, 서브 헤더로 전달해서 토글 메뉴 기능이 동작하도록 수정
 /*
@@ -35,6 +37,8 @@ import { useDispatch } from 'react-redux';
 */
 
 function App() {
+  const queryClient = new QueryClient();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,7 +50,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Switch>
         <Route exact path='/' render={() => <Main />} />
         <Route path='/' render={() => <Header type={'sub'} />} />
@@ -61,8 +65,8 @@ function App() {
 
       <Footer />
       <Menu />
-    </>
-  );
+      <ReactQueryDevtools />
+    </QueryClientProvider>);
 }
 
 export default App;
