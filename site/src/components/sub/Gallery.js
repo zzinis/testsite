@@ -1,14 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchFlickr } from '../../redux/flickrSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchFlickr } from '../../redux/flickrSlice';
 import Layout from '../common/Layout';
 import Masonry from 'react-masonry-component';
 import Modal from '../common/Modal';
+import { useFlickrQuery } from '../../hooks/useFlickerQuery';
+
 const [Index, setIndex] = useState(0);
 
 
 function Gallery() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    /*
+        hooks은 다른 hook이나 일반 함수안쪽에서 호출 불가 : useEffect안쪽이나 이벤트 핸들러 안쪽에서 호출불가, 컴포넌트 안쪽에서만 호출
+    */
+    const [Opt, setOpt] = useState({ type: 'user', user: '' });
+    const { data: Items, isSuccess } = useFlickrQuery(Opt);
     const openModal = useRef(null);
     const isUser = useRef(true);
     const searchInput = useRef(null);
@@ -16,7 +23,6 @@ function Gallery() {
     const btnSet = useRef(null);
     const frame = useRef(null);
     //const counter = useRef(0);
-    const Items = useSelector((store) => store.flickr.data);
     const [Loader, setLoader] = useState(true);
     const [Index, setIndex] = useState(0);
     const counter = useRef(0);
@@ -104,7 +110,7 @@ function Gallery() {
 
         //새로운 데이터로 갤러리 생성 함수 호출
         // getFlickr({ type: 'interest' });
-        dispatch(fetchFlickr({ type: 'interest' }));
+        setOpt({ type: 'interest' });
 
         isUser.current = false;
 
@@ -117,9 +123,9 @@ function Gallery() {
 
         //기존 갤러리 초기화 함수 호출
         resetGallery(e);
+        setOpt({ type: 'user', user: '' });
 
         //새로운 데이터로 갤러리 생성 함수 호출
-        dispatch(fetchFlickr({ type: 'user', user: '' }));
     };
     const showSearch = (e) => {
         const tag = searchInput.current.value.trim();
@@ -127,7 +133,7 @@ function Gallery() {
         if (!enableEvent.current) return;
 
         resetGallery(e);
-        dispatch(fetchFlickr({ type: 'search', tags: tag }));
+        setOpt({ type: 'search', tags: tag });
         searchInput.current.value = '';
         isUser.current = false;
 
@@ -135,12 +141,12 @@ function Gallery() {
     useEffect(() => {
         console.log(Items);
         counter.current = 0;
-        if (Items.length === 0 && !firstLoaded.current) {
+        if (isSuccess && Items.length === 0 && !firstLoaded.current) {
             setLoader(false);
             frame.current.classList.add('on');
             const btnMine = btnSet.current.children;
             btnMine[1].classList.add('on');
-            dispatch(fetchFlickr({ type: 'user', user: '164021883@N04' }));
+            setOpt({ type: 'user', user: '' });
             enableEvent.current = true;
             return alert('이미지 결과값이 없습니다.');
         }
@@ -158,7 +164,7 @@ function Gallery() {
                 }
             };
         });
-    }, [Items, dispatch]);
+    }, [Items]);
     return (
         <>
             <Layout name={'Gallery'} bg={'Gallery.jpg'}>
