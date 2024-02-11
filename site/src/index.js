@@ -2,32 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-// import youtubeReducer from './redux/youtubeSlice';
-// import flickrReducer from './redux/flickrSlice';
-import menuReducer from './redux/menuSlice';
 
-
-
-const store = configureStore({
-  reducer: {
-    // youtube: youtubeReducer,
-    // department: departmentReducer,
-    // flickr: flickrReducer,
-    menu: menuReducer,
-
-
-  },
-});
+import { GlobalProvider } from './hooks/useGlobalContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <GlobalProvider>
       <App />
-    </Provider>  </React.StrictMode>
+    </GlobalProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
