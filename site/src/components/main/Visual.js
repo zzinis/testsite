@@ -1,7 +1,6 @@
 import { memo } from 'react';
 
 function Visual() {
-    console.log('visual');
 
     return (
         <figure id='visual' className='myScroll'>
