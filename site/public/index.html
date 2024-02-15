@@ -98,7 +98,6 @@
           //video.onloadeddata
           img.onload = () => {
             countImg++;
-            console.log('img loaded..', countImg);
 
             if (countImg === lenImg) {
               res(true);
@@ -116,7 +115,6 @@
         vidDOM.forEach(vid => {
           vid.onloadeddata = () => {
             countVid++;
-            console.log('vid loaded..', countVid);
 
             if (countVid === lenVid) {
               res(true);
@@ -132,7 +130,6 @@
 
     //promise.all()로 loadImg, loadVid함수가 모두 프로미스 객체를 반환할때까지 기다린후 동기화 처리
     Promise.all([loadImg(), loadVid()]).then(result => {
-      console.log(result);
       mask.classList.add('off');
 
       setTimeout(() => {
