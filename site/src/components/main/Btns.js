@@ -16,6 +16,8 @@ function Btns({ setScrolled, setPos }) {
     }, [setPos]);
 
     const activation = useCallback(() => {
+        console.log('activation');
+
         const base = -window.innerHeight / 2;
         const scroll = window.scrollY;
         const btns = btnRef.current.children;
