@@ -1,5 +1,7 @@
 import { useRef, useEffect, useState, useCallback, memo } from 'react';
 import Anime from '../../asset/anime';
+import { useThrottle } from '../../hooks/useThrottle';
+
 
 function Btns({ setScrolled, setPos }) {
     const btnRef = useRef(null);
@@ -7,6 +9,7 @@ function Btns({ setScrolled, setPos }) {
     const [Num, setNum] = useState(0);
 
     const getPos = useCallback(() => {
+        console.log('getPos');
 
         pos.current = [];
         const secs = btnRef.current.parentElement.querySelectorAll('.myScroll');
@@ -34,18 +37,20 @@ function Btns({ setScrolled, setPos }) {
         });
     }, [setScrolled]);
 
+    const getPos2 = useThrottle(getPos);
+    const activation2 = useThrottle(activation);
     useEffect(() => {
         getPos();
-        window.addEventListener('resize', getPos);
-        window.addEventListener('scroll', activation);
+        window.addEventListener('resize', getPos2);
+        window.addEventListener('scroll', activation2);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
         return () => {
-            window.removeEventListener('resize', getPos);
-            window.removeEventListener('scroll', activation);
+            window.removeEventListener('resize', getPos2);
+            window.removeEventListener('scroll', activation2);
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         };
-    }, [getPos, activation]);
+    }, [getPos2, activation2, getPos]);
     return (
         <ul className='btnNavi' ref={btnRef}>
             {/* 현재 세로 위치값이 담겨있는 배열의 갯수로 빈배열 동적으로 생성하고 버튼 반복처리 */}
