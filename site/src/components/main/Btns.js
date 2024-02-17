@@ -26,7 +26,6 @@ function Btns({ setScrolled, setPos }) {
         const btns = btnRef.current.children;
         const boxs = btnRef.current.parentElement.querySelectorAll('.myScroll');
 
-        setScrolled(scroll);
         pos.current.forEach((pos, idx) => {
             if (scroll >= pos + base) {
                 for (const btn of btns) btn.classList.remove('on');
@@ -35,6 +34,11 @@ function Btns({ setScrolled, setPos }) {
                 boxs[idx].classList.add('on');
             }
         });
+    }, []);
+
+    const changeScroll = useCallback(() => {
+        const scroll = window.scrollY;
+        setScrolled(scroll);
     }, [setScrolled]);
 
     const getPos2 = useThrottle(getPos);
@@ -43,14 +47,18 @@ function Btns({ setScrolled, setPos }) {
         getPos();
         window.addEventListener('resize', getPos2);
         window.addEventListener('scroll', activation2);
+        window.addEventListener('scroll', changeScroll);
+
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
         return () => {
             window.removeEventListener('resize', getPos2);
             window.removeEventListener('scroll', activation2);
+            window.removeEventListener('scroll', changeScroll);
+
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         };
-    }, [getPos2, activation2, getPos]);
+    }, [getPos2, activation2, getPos, changeScroll]);
     return (
         <ul className='btnNavi' ref={btnRef}>
             {/* 현재 세로 위치값이 담겨있는 배열의 갯수로 빈배열 동적으로 생성하고 버튼 반복처리 */}
