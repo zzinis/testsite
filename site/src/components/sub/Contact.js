@@ -1,7 +1,9 @@
 import React from 'react'
 import Layout from '../common/Layout';
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import emailjs from '@emailjs/browser';
+import { useThrottle } from '../../hooks/useThrottle';
+
 function Contact() {
     const [Traffic, setTraffic] = useState(false);
     const [Location, setLocation] = useState(null);
@@ -48,6 +50,16 @@ function Contact() {
             ),
         });
     }, [Index, kakao]);
+
+    const setCenter = useCallback(() => {
+        console.log('setCenter');
+        Location?.setCenter(info.current[Index].latlng);
+    }, [Index, Location]);
+
+    //커스텀훅은 다른 hook안쪽에서 호출이 불가능하므로
+    //useThrottle을 활용해야 되는 함수가 useEffect안쪽에 있다면
+    //밖으로 꺼내서 useThrottle적용한다음 또다른 useEffect안쪽에서 이벤트 연결
+    const setCenter2 = useThrottle(setCenter);
     useEffect(() => {
         container.current.innerHTML = '';
         const mapInstance = new kakao.maps.Map(container.current, { center: info.current[Index].latlng, level: 3 });
@@ -57,13 +69,12 @@ function Contact() {
 
         setLocation(mapInstance);
         mapInstance.setZoomable(false);
-        const setCenter = () => {
+    }, [kakao, Index, marker]);
 
-            mapInstance.setCenter(info.current[Index].latlng);
-        };
-        window.addEventListener('resize', setCenter);
-        return () => window.removeEventListener('resize', setCenter);
-    }, [Index, kakao, marker]);
+    useEffect(() => {
+        window.addEventListener('resize', setCenter2);
+        return () => window.removeEventListener('resize', setCenter2);
+    }, [setCenter2]);
     //폼메일 전송 함수
     const sendEmail = (e) => {
         e.preventDefault();

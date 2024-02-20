@@ -143,7 +143,7 @@ function Gallery() {
         counter.current = 0;
         if (isSuccess && Items.length === 0 && !firstLoaded.current) {
             setLoader(false);
-            frame.current.classList.add('on');
+            frame?.current.classList.add('on');
             const btnMine = btnSet.current.children;
             btnMine[1].classList.add('on');
             setOpt({ type: 'user', user: '' });
