@@ -26,6 +26,8 @@ import './scss/style.scss';
 // import { useDispatch } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useState } from 'react';
+
 
 //Menu컴포넌를 App에서 호출한뒤 토글 객체를 각각 메인, 서브 헤더로 전달해서 토글 메뉴 기능이 동작하도록 수정
 /*
@@ -38,7 +40,20 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 function App() {
   const queryClient = new QueryClient();
+  console.log('rendered!!');
+  const [Count, setCount] = useState(0);
+  const [Count2, setCount2] = useState(0);
 
+  const returnPromise = () => {
+    return new Promise((res) => setTimeout(res, 500));
+  };
+
+  const handleClick = () => {
+    returnPromise().then(() => {
+      setCount(Count + 1);
+      setCount2(Count2 + 2);
+    });
+  };
   // const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -50,6 +65,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div style={{ position: 'fixed', zIndex: 10 }}>
+        <button onClick={handleClick}>button</button>
+        <h1 style={{ color: '#fff' }}>
+          {Count} - {Count2}
+        </h1>
+      </div>
       <Switch>
         <Route exact path='/' render={() => <Main />} />
         <Route path='/' render={() => <Header type={'sub'} />} />
@@ -69,3 +90,9 @@ function App() {
 }
 
 export default App;
+
+/*
+  Automatic Batching 
+  :여려개의 state값이 하나의 핸들러 함수 안쪽에서 동시에 변경이 될때 그룹으로 묶어서 한번만 렌더링 처리
+  :17에도 동작되는 기능이긴 하나 promise를 반환하는 함수 안쪽에 여러개의 state값이 변경될 경우에는 동작안됨
+*/
