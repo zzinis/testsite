@@ -136,7 +136,7 @@ function Members() {
                                         id='userid'
                                         placeholder='아이디를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.userid}
+                                        value={Val.userid || ''}
                                     />
                                     <br />
                                     {Err.userid && <p>{Err.userid}</p>}
@@ -154,7 +154,7 @@ function Members() {
                                         id='pwd1'
                                         placeholder='비밀번호를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.pwd1}
+                                        value={Val.pwd1 || ''}
                                     />
                                     <br />
                                     {Err.pwd1 && <p>{Err.pwd1}</p>}
@@ -172,7 +172,7 @@ function Members() {
                                         id='pwd2'
                                         placeholder='비밀번호를 재입력하세요'
                                         onChange={handleChange}
-                                        value={Val.pwd2}
+                                        value={Val.pwd2 || ''}
                                     />
                                     <br />
                                     {Err.pwd2 && <p>{Err.pwd2}</p>}
@@ -191,7 +191,7 @@ function Members() {
                                         id='email'
                                         placeholder='이메일주소를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.email}
+                                        value={Val.email || ''}
                                     />
                                     <br />
                                     {Err.email && <p>{Err.email}</p>}
@@ -250,7 +250,7 @@ function Members() {
                                         id='comments'
                                         cols='30'
                                         rows='3'
-                                        value={Val.comments}
+                                        value={Val.comments || ''}
                                         onChange={handleChange}
                                         placeholder='남기는 말을 입력하세요.'
                                     ></textarea>
