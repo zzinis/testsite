@@ -27,11 +27,7 @@ function Members() {
         //기존 초기 Val State값을 deep copy해서 현재 입력하고 있는 항목의 name값과 value값으로 기존 State를 덮어쓰기 해서 변경 (불변성 유지)
         setVal({ ...Val, [name]: value });
     };
-    const handleRadio = (e) => {
-        const { name, value } = e.target;
 
-        setVal({ ...Val, [name]: value });
-    };
 
     const handleCheck = (e) => {
         const { name } = e.target;
@@ -44,10 +40,7 @@ function Members() {
         setVal({ ...Val, [name]: checkArr });
     };
 
-    const handleSelect = (e) => {
-        const { name, value } = e.target;
-        setVal({ ...Val, [name]: value });
-    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('현재 스테이트값', Val);
@@ -136,7 +129,7 @@ function Members() {
                                         id='userid'
                                         placeholder='아이디를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.userid || ''}
+                                        value={Val.userid}
                                     />
                                     <br />
                                     {Err.userid && <p>{Err.userid}</p>}
@@ -154,7 +147,7 @@ function Members() {
                                         id='pwd1'
                                         placeholder='비밀번호를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.pwd1 || ''}
+                                        value={Val.pwd1}
                                     />
                                     <br />
                                     {Err.pwd1 && <p>{Err.pwd1}</p>}
@@ -172,7 +165,7 @@ function Members() {
                                         id='pwd2'
                                         placeholder='비밀번호를 재입력하세요'
                                         onChange={handleChange}
-                                        value={Val.pwd2 || ''}
+                                        value={Val.pwd2}
                                     />
                                     <br />
                                     {Err.pwd2 && <p>{Err.pwd2}</p>}
@@ -191,7 +184,7 @@ function Members() {
                                         id='email'
                                         placeholder='이메일주소를 입력하세요'
                                         onChange={handleChange}
-                                        value={Val.email || ''}
+                                        value={Val.email}
                                     />
                                     <br />
                                     {Err.email && <p>{Err.email}</p>}
@@ -202,9 +195,9 @@ function Members() {
                                 <th>GENDER</th>
                                 <td>
                                     <label htmlFor='male'>Male</label>
-                                    <input type='radio' name='gender' value='male' id='mail' onChange={handleRadio} />
+                                    <input type='radio' name='gender' value='male' id='mail' onChange={handleChange} />
                                     <label htmlFor='female'>FeMale</label>
-                                    <input type='radio' name='gender' value='female' id='female' onChange={handleRadio} />
+                                    <input type='radio' name='gender' value='female' id='female' onChange={handleChange} />
                                     <br />
                                     {Err.gender && <p>{Err.gender}</p>}
                                 </td>
@@ -229,7 +222,7 @@ function Members() {
                                     <label htmlFor='edu'>EDUCATION</label>
                                 </th>
                                 <td>
-                                    <select name='edu' id='edu' onChange={handleSelect} ref={selectEl}>
+                                    <select name='edu' id='edu' onChange={handleChange} ref={selectEl}>
                                         <option value=''>최종학력을 선택하세요</option>
                                         <option value='elementary-school'>초등학교 졸업</option>
                                         <option value='middle-school'>중학교 졸업</option>
@@ -250,7 +243,7 @@ function Members() {
                                         id='comments'
                                         cols='30'
                                         rows='3'
-                                        value={Val.comments || ''}
+                                        value={Val.comments}
                                         onChange={handleChange}
                                         placeholder='남기는 말을 입력하세요.'
                                     ></textarea>
