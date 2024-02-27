@@ -86,15 +86,15 @@ function Members() {
         return errs;
     };
 
-    const resetForm = useCallback(() => {
-        const select = selectEl.current.options[0];
-        const checks = checkGroup.current.querySelectorAll('input');
-        const radios = radioGroup.current.querySelectorAll('input');
-        select.selected = true;
-        checks.forEach((el) => (el.checked = false));
-        radios.forEach((el) => (el.checked = false));
-        setVal(initVal);
-    }, []);
+    // const resetForm = useCallback(() => {
+    // 	const select = selectEl.current.options[0];
+    // 	const checks = checkGroup.current.querySelectorAll('input');
+    // 	const radios = radioGroup.current.querySelectorAll('input');
+    // 	select.selected = true;
+    // 	checks.forEach((el) => (el.checked = false));
+    // 	radios.forEach((el) => (el.checked = false));
+    // 	setVal(initVal);
+    // }, []);
 
     useEffect(() => {
         //객체의 키값을 배열로 반환한다음 해당 배열의 갯수를 저장
@@ -102,10 +102,10 @@ function Members() {
         const len = Object.keys(Err).length;
         if (len === 0 && Submit) {
             alert('모든 인증을 통과했습니다.');
-            // history.push('/');
-            resetForm();
+            history.push('/');
+
         }
-    }, [Err, Submit, resetForm]);
+    }, [Err, Submit, history]);
     useEffect(() => {
         console.log(Val);
     }, [Val]);
