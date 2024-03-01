@@ -1,6 +1,8 @@
 import Layout from '../common/Layout';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDebounce } from '../../hooks/useDebounce';
+
 function Members() {
     const selectEl = useRef(null);
     //initVal값을 굳이 useMemo로 메모이제이션 하지 않더라도 useRef로 담아놓으면 해당 값은 컴포넌트가 재랜더링되더라도 값을 기억
@@ -21,6 +23,8 @@ function Members() {
     const [Val, setVal] = useState(initVal.current);
     const [Err, setErr] = useState({});
     const [Submit, setSubmit] = useState(false);
+    const DebouncedVal = useDebounce(Val);
+
     const handleChange = (e) => {
         //현재 입력하고 있는 input요소의 name,value값을 비구조화할당으로 뽑아서 출력
         const { name, value } = e.target;
@@ -39,6 +43,10 @@ function Members() {
         });
         setVal({ ...Val, [name]: checkArr });
     };
+    const showErr = useCallback(() => {
+        console.log('showErr');
+        setErr(check(DebouncedVal));
+    }, [DebouncedVal]);
 
 
     const handleSubmit = (e) => {
@@ -98,8 +106,8 @@ function Members() {
         }
     }, [Err, Submit, history]);
     useEffect(() => {
-        console.log(Val);
-    }, [Val]);
+        showErr();
+    }, [DebouncedVal, showErr]);
     return (
         <Layout name={'Member'} bg={'Members.jpg'}>
             <button onClick={() => history.goBack()}>뒤로 가기</button>
