@@ -107,6 +107,8 @@ function Members() {
     }, [Err, Submit, history]);
     useEffect(() => {
         showErr();
+        setSubmit(false);
+
     }, [DebouncedVal, showErr]);
     return (
         <Layout name={'Member'} bg={'Members.jpg'}>
