@@ -23,6 +23,8 @@ function Members() {
     const [Val, setVal] = useState(initVal.current);
     const [Err, setErr] = useState({});
     const [Submit, setSubmit] = useState(false);
+    const [Mounted, setMounted] = useState(true);
+
     const DebouncedVal = useDebounce(Val);
 
     const handleChange = (e) => {
@@ -45,8 +47,9 @@ function Members() {
     };
     const showErr = useCallback(() => {
         console.log('showErr');
-        setErr(check(DebouncedVal));
-    }, [DebouncedVal]);
+        Mounted && setErr(check(DebouncedVal));
+    }, [DebouncedVal, Mounted]);
+
 
 
     const handleSubmit = (e) => {
@@ -55,7 +58,7 @@ function Members() {
         //check가 반환하는 인증 메세지가 있으면 해당 메세지를 화면에 출력하고 전송중지
         //그렇지 않으면 인증 성공
         console.log(check(Val));
-        setErr(check(Val));
+        Mounted && setErr(check(Val));
         setSubmit(true);
     };
 
@@ -102,8 +105,9 @@ function Members() {
         if (len === 0 && Submit) {
             alert('모든 인증을 통과했습니다.');
             history.push('/');
-
         }
+        return () => setMounted(false);
+
     }, [Err, Submit, history]);
     useEffect(() => {
         showErr();
